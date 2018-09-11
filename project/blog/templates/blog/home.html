@@ -1,0 +1,28 @@
+{% extends 'blog/base.html'%}
+
+{%block title %}<title>home</title>{%endblock%}
+{% block content%}
+{% for post in posts %}
+<!-- for each post -->
+<article class="media content-section">
+<!-- place for author image  .rounded-circle = boot4 class |.article-image= custom css-->
+   <img class="rounded-circle article-img" src="{{post.author.profile.image.url}}" alt='photo'>
+   <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{% url 'user-post' post.author.username %}"> {{post.author}}</a>
+      <small class="text-muted"> {{post.date_posted|date:"d F Y, D "}} </small>
+    </div>
+    <h2><a class="mr-2" href="{% url 'post-detail' pk=post.pk%}"> {{post.title}}</a></h2>
+
+    <p class="article-content"> {{post.content}} </p>
+  </div>
+</article>
+{% endfor %}
+<!-- end for each post -->
+
+<!-- start paginator -->
+<div class="pagination">
+    {% include 'blog/compounds/pagination.html'%}
+</div>
+<!-- end paginator -->
+{% endblock content%}
